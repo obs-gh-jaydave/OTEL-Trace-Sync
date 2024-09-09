@@ -1,0 +1,33 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: "0.0.0.0:4318"
+        cors:
+          allowed_origins:
+            - http://localhost:3000  # Add the origin of your front-end
+          allowed_headers:
+            - Authorization
+            - Content-Type
+            - X-Requested-With
+            - Accept
+            - traceparent      # Allow trace context propagation header
+            - tracestate      # Allow trace context propagation header
+      grpc:
+        endpoint: "0.0.0.0:4317"
+
+processors:
+  batch:
+
+exporters:
+  otlphttp:
+    endpoint: "<YOUR_OBSERVE_ENDPOINT>"
+    headers:
+      authorization: "Bearer <YOUR_OBSERVE_AUTHORIZATION_TOKEN>"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlphttp]
