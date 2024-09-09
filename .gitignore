@@ -10,10 +10,6 @@ npm-debug.log*
 /.pnp
 .pnp.js
 
-# Docker files
-docker-compose.override.yml
-docker-compose.yml
-
 # Build directories
 build/
 dist/
